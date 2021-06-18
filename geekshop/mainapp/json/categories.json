@@ -1,0 +1,22 @@
+[
+    {
+        "name": "дом",
+        "description": "",
+        "is_active": true
+    },
+    {
+        "name": "офис",
+        "description": "",
+        "is_active": true
+    },
+    {
+        "name": "модерн",
+        "description": "",
+        "is_active": true
+    },
+    {
+        "name": "классика",
+        "description": "",
+        "is_active": true
+    }
+]

@@ -1,0 +1,22 @@
+[
+    {
+        "category": "дом",
+        "name": "Отличный стул",
+        "image": "products_img/product-4.jpg",
+        "short_desc": "Отличный стул",
+        "description": "Расположитесь комфортно.\r\n\r\nОтличное качество материалов позволит вам это.\r\n\r\nРазличные цвета\r\n\r\nвысочайший уровень эргономики и прочность.",
+        "price": "2500.00",
+        "quantity": 10,
+        "is_active": true
+    },
+    {
+        "category": "модерн",
+        "name": "Современная лампа",
+        "image": "products_img/product-1.jpg",
+        "short_desc": "Современная лампа",
+        "description": "Современная лампа\r\nПодойдет к любому интерьеру",
+        "price": "1000.00",
+        "quantity": 15,
+        "is_active": true
+    }
+]

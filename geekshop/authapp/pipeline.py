@@ -42,11 +42,9 @@ def save_user_profile(backend, user, response, *args, **kwargs):
         resp = requests.get(vk_data['photo_max_orig'])
         if resp.status_code == 200:
             file_name = f'users_avatars/{user.email}_avatar.jpg'
-            full_file_name = f'{settings.MEDIA_ROOT}/{file_name}'
+            full_file_name = f'media/{file_name}'
             with open(full_file_name, 'wb') as f:
-                for chunk in resp.iter_content(10):
-                    f.write(chunk)
-            f.close()
+                f.write(resp.content)
             user.avatar = file_name
 
     user.save()

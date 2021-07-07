@@ -14,4 +14,5 @@ urlpatterns = [
         ordersapp.forming_complite,
         name='forming_complite'
     ),
+    path('get-product-price/<pk>', ordersapp.get_product_price, name='get_product_price'),
 ]

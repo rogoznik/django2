@@ -1,0 +1,22 @@
+<div class="text-center">
+    {% if object.status == 'FM' %}
+        <div class="mb-1">
+            <a href="{% url 'order:forming_complite' object.pk %}" class="btn btn-success">
+                совершить покупку
+            </a>
+        </div>
+        <div class="mb-1">
+            <a href="{% url 'order:delete' object.pk %}" class="btn btn-danger">удалить</a>
+        </div>
+    {% endif %} 
+        <div class="mb-1">
+            <a href="{% url 'order:list' %}" class="btn btn-info">
+                к списку заказов
+            </a>
+        </div>
+        <div>
+            <a href="{% url 'index' %}" class="btn btn-light">на главную</a>
+        </div>
+</div>
+
+

@@ -1,6 +1,9 @@
+import json
+
 from ordersapp.models import Order, OrderItem
 from basketapp.models import Basket
 from ordersapp.forms import OrderItemEditForm
+from mainapp.models import Product
 
 from django.urls.base import reverse
 from django.forms.models import inlineformset_factory
@@ -10,7 +13,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.urls import reverse_lazy
 from django.db import transaction
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 
 
 class OrderList(ListView):
@@ -51,6 +54,8 @@ class OrderCreate(CreateView):
                 for num, form in enumerate(formset.forms):
                     form.initial['product'] = basket_items[num].product
                     form.initial['quantity'] = basket_items[num].quantity
+                    form.initial['price'] = basket_items[num].product.price
+                basket_items.delete()
             else:
                 formset = OrderFormSet()
 
@@ -94,6 +99,9 @@ class OrderUpdate(UpdateView):
             formset = OrderFormSet(self.request.POST, instance=self.object)
         else:
             formset = OrderFormSet(instance=self.object)
+            for form in formset.forms:
+                if form.instance.pk:
+                    form.initial['price'] = form.instance.product.price
 
         data['orderitems'] = formset
 
@@ -131,3 +139,13 @@ def forming_complite(request, pk):
     order.save()
 
     return HttpResponseRedirect(reverse('order:list'))
+
+
+def get_product_price(request, pk):
+    data_response = {}
+
+    if request.is_ajax():
+        product = get_object_or_404(Product, pk=pk)
+        data_response['price'] = str(product.price)
+
+    return HttpResponse(json.dumps(data_response), content_type='application/json')

@@ -143,7 +143,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'geekshop', "static"),
+    os.path.join(BASE_DIR, "static"),
 )
 
 # для поиска папок со статикой внутри папок приложений

@@ -5,6 +5,8 @@ from basketapp.models import Basket
 from ordersapp.forms import OrderItemEditForm
 from mainapp.models import Product
 
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from django.urls.base import reverse
 from django.forms.models import inlineformset_factory
 from django.shortcuts import get_object_or_404, render
@@ -27,6 +29,10 @@ class OrderCreate(CreateView):
     model = Order
     success_url = reverse_lazy('order:list')
     fields = []
+
+    @method_decorator(login_required())
+    def dispatch(self, request, *args, **kwargs):
+        return super(OrderUpdate, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
@@ -84,6 +90,10 @@ class OrderUpdate(UpdateView):
     model = Order
     success_url = reverse_lazy('order:list')
     fields = []
+
+    @method_decorator(login_required())
+    def dispatch(self, request, *args, **kwargs):
+        return super(OrderUpdate, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)

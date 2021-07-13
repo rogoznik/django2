@@ -32,7 +32,7 @@ class OrderCreate(CreateView):
 
     @method_decorator(login_required())
     def dispatch(self, request, *args, **kwargs):
-        return super(OrderUpdate, self).dispatch(*args, **kwargs)
+        return super(OrderUpdate, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
@@ -93,7 +93,7 @@ class OrderUpdate(UpdateView):
 
     @method_decorator(login_required())
     def dispatch(self, request, *args, **kwargs):
-        return super(OrderUpdate, self).dispatch(*args, **kwargs)
+        return super(OrderUpdate, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)

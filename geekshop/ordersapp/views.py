@@ -5,6 +5,8 @@ from basketapp.models import Basket
 from ordersapp.forms import OrderItemEditForm
 from mainapp.models import Product
 
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from django.urls.base import reverse
 from django.forms.models import inlineformset_factory
 from django.shortcuts import get_object_or_404, render
@@ -28,6 +30,10 @@ class OrderCreate(CreateView):
     success_url = reverse_lazy('order:list')
     fields = []
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(CreateView, self).dispatch(*args, **kwargs)
+
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
 
@@ -41,7 +47,7 @@ class OrderCreate(CreateView):
         if self.request.POST:
             formset = OrderFormSet(self.request.POST)
         else:
-            basket_items = list(Basket.objects.filter(user=self.request.user))
+            basket_items = Basket.objects.filter(user=self.request.user)
             if len(basket_items):
                 OrderFormSet = inlineformset_factory(
                     Order,
@@ -85,6 +91,10 @@ class OrderUpdate(UpdateView):
     success_url = reverse_lazy('order:list')
     fields = []
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(UpdateView, self).dispatch(*args, **kwargs)
+
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
 
@@ -98,7 +108,8 @@ class OrderUpdate(UpdateView):
         if self.request.POST:
             formset = OrderFormSet(self.request.POST, instance=self.object)
         else:
-            formset = OrderFormSet(instance=self.object)
+            queryset = self.object.orderitems.select_related()
+            formset = OrderFormSet(instance=self.object, queryset=queryset)
             for form in formset.forms:
                 if form.instance.pk:
                     form.initial['price'] = form.instance.product.price

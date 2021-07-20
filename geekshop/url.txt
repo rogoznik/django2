@@ -1,0 +1,13 @@
+http://134.0.117.94/auth/login/ POST username=django&password=123
+http://134.0.117.94/
+http://134.0.117.94/products/
+http://134.0.117.94/contacts/
+http://134.0.117.94/products/category/1/
+http://134.0.117.94/products/category/2/
+http://134.0.117.94/products/category/3/
+http://134.0.117.94/products/category/4/
+http://134.0.117.94/basket/
+http://134.0.117.94/order/
+http://134.0.117.94/auth/edit/
+http://134.0.117.94/order/update/3/
+http://134.0.117.94/order/update/4/

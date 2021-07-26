@@ -1,7 +1,8 @@
-from django.db import models
-
 from geekshop import settings
 from mainapp.models import Product
+
+from django.db import models
+from django.utils.functional import cached_property
 
 
 class BasketQuerySet(models.QuerySet):

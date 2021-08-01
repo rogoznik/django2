@@ -1,10 +1,24 @@
 from django.shortcuts import render
 from mainapp.models import Product
 from basketapp.models import Basket
+from django.conf import settings
+from django.core.cache import cache
+
+
+def get_products():
+    if settings.LOW_CACHE:
+        key = 'products'
+        products = cache.get(key)
+        if products is None:
+            products = Product.objects.filter(is_active=True, category__is_active=True).select_related('category')
+            cache.set(key, products)
+        return products
+    else:
+        return Product.objects.filter(is_active=True, category__is_active=True).select_related('category')
 
 
 def main(request):
-    products = Product.objects.filter(is_active=True, category__is_active=True).select_related('category')[:2]
+    products = get_products()[:2]
 
     basket = ''
     if request.user.is_authenticated:
